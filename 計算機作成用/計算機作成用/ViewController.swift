@@ -21,11 +21,23 @@ class ViewController: UIViewController {
         
     super.viewDidLoad()
         
+        //画像のインスタンスを生成
+        let image = UIImage(named: "star")
+        
+        //画像の追加
+        let imageView = UIImageView(image: image)
+        
+        //Viweに画像を追加
+        self.view.addSubview(imageView)
+        
         // Labelを作成.
         myLabel = UILabel(frame: CGRectMake(0,0,370,193))
         
+        //フォントの変更
+        myLabel?.font = UIFont(name: "Baskerville-BoldItalic", size: 20)
+        
         // 背景をオレンジ色にする.
-        myLabel?.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+        myLabel?.backgroundColor = UIColor.clearColor() // UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
         
         // 枠を丸くする.
         myLabel?.layer.masksToBounds = true
@@ -58,7 +70,12 @@ class ViewController: UIViewController {
         
         
         
+        
+        
+        
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
         
         
         let button1 = makebutton(235,x:48,title:"AC")
@@ -119,6 +136,9 @@ class ViewController: UIViewController {
         
         //テキストの色
         button3.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        
+        //フォントの変更
+        button3.titleLabel?.font = UIFont(name: "Baskerville-BoldItalic", size: 20)
         
         //タップした状態のテキスト
         //button3.setTitle("Tapped!", forState: .Highlighted)
@@ -182,11 +202,37 @@ class ViewController: UIViewController {
             
             //どの四則演算を行うのか？の指示
             operate = "-"
+        
             
+            // ×ボタンが押された場合の処理
+        }else if (button3.titleLabel!.text! == "×"){
             
+            // ラベルの文字列を数値に変換
+            number = (myLabel!.text! as NSString).doubleValue
+            
+            // ラベルの文字を消す
+            myLabel?.text? = ""
+            
+            //どの四則演算を行うのか？の指示
+            operate = "×"
+            
+            //÷ボタンが押された場合の処理
+        } else if (button3.titleLabel!.text! == "÷"){
+            
+            // ラベルの文字列を数値に変換
+            number = (myLabel!.text! as NSString).doubleValue
+            
+            // ラベルの文字を消す
+            myLabel?.text? = ""
+            
+            //どの四則演算を行うのか？の指示
+            operate = "÷"
+            
+
+
         
             //イコールが押された場合の処理
-       } else if (button3.titleLabel!.text! == "="){
+       }else if (button3.titleLabel!.text! == "="){
             
             // +ボタンが押された場合は
             if (operate == "+"){
@@ -204,16 +250,44 @@ class ViewController: UIViewController {
                 
             myLabel?.text? = String(format: "%g",result)
                 
-         
+            // ×ボタンが押された場合は
+            }else if(operate == "×"){
+            
+             let number2 = (myLabel!.text! as NSString).doubleValue
+             let result = number * number2
+
+             myLabel?.text? = String(format: "%g",result)
+                
+            // ÷ボタンが押された場合は
+            }else if(operate == "÷"){
+                
+             let number2 = (myLabel!.text! as NSString).doubleValue
+             let result = number / number2
+             
+             myLabel?.text? = String(format: "%g",result)
+                
+            
+
+                
+    
+            //小数点ボタンが押された場合は
+        }else if (button3.titleLabel!.text! == ".") {
+            // ラベルのテキストにコンマが含まれていなかったら
+            if (myLabel?.text?.rangeOfString(".") == nil) {
+                    
+                    myLabel?.text? += "."
+                    
+                //%が押された場合は
+                }else if (button3.titleLabel!.text! == "%"){
+              
+                let result = number/100.0
+                
+                
                 }
-           
-           
+                }
             
             }
         
-            
-            
-            
             // それ以外のボタンが押された場合の処理
          else {
             
